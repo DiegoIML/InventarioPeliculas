@@ -70,22 +70,21 @@ public class OperacionesBD extends Conexion{
        PreparedStatement ps;
        ResultSet rs;
        Connection conn = getConexion();  
-       String leeBD  = "Select Max(inventory_id) From rental ;" ;
+       String leeBD  = "Select Max(inventory_id) From inventory ;" ;
         
             try {
                   ps = conn.prepareStatement(leeBD);
                   rs = ps.executeQuery();
                 
-                // ResultSet rs = st.executeQuery(leeBD);
-                // rs.setInt(1,Integer.parseInt(film_id));
-                 String last_inventory_id = "";
+
+                 int last_inventory_id = 0;
                  if (rs.next()) {
-                     last_inventory_id = rs.getString(1);
+                     last_inventory_id = rs.getInt(1) + 1;
                  }
                  //System.out.println("Valor del ultimo id = " + last_inventory_id);
                  String insertarBD = "insert into inventory(inventory_id ,film_id , store_id , last_update ) values  (?,?,?,localtimestamp)"  ;
                  ps = conn.prepareStatement(insertarBD);
-                 ps.setInt (1 , (Integer.parseInt(last_inventory_id) + 1)  );
+                 ps.setInt (1 , last_inventory_id  );
                  ps.setInt (2 ,Integer.parseInt(film_id ));
                  ps.setInt (3 ,Integer.parseInt(store_id));
                  //ps.set
@@ -165,17 +164,17 @@ public class OperacionesBD extends Conexion{
     //////////////////////////////////////////////////////////////////////////////////////
     ///OPERACIONES AUXILIARES EN PARA EL CRUDTEST. 
     //////////////////////////////////////////////////////////////////////////////////////
-    public int numeroFilas (int idInventario, int idPelicula , int idTienda) {
+    public int numeroFilasFilm ( int idPelicula ) {
        int numFilas = 0;
        PreparedStatement ps;
        ResultSet rs;
        Connection conn = getConexion(); 
             try {
-                 String consultarBD = "Select count(*) from inventory where inventory_id  = ? and film_id = ? and store_id = ?;"  ;
+                 String consultarBD = "Select count(*) from inventory where film_id = ? "  ;
                  ps = conn.prepareStatement(consultarBD);
-                 ps.setInt (1 , idInventario  );
-                 ps.setInt (2 , idPelicula );
-                 ps.setInt (3 , idTienda );
+                 //ps.setInt (1 , idInventario  );
+                 ps.setInt (1 , idPelicula );
+                // ps.setInt (3 , idTienda );
                  rs = ps.executeQuery();
                  if (rs.next()) {   
                      numFilas = rs.getInt(1);
@@ -261,7 +260,7 @@ public class OperacionesBD extends Conexion{
         ResultSet rs;
         Connection conn = getConexion();
         try {
-                 String consultarBD = "Select (*) from inventory where inventory_id  = ? and film_id  = ? and store_id = ?;"  ;
+                 String consultarBD = "Select Count(*) from inventory where inventory_id  = ? and film_id  = ? and store_id = ?;"  ;
                  ps = conn.prepareStatement(consultarBD);
                  ps.setInt (1 , idInventario  );
                  ps.setInt (2 , idPelicula );
@@ -271,7 +270,8 @@ public class OperacionesBD extends Conexion{
                  if (rs.next()) {   
                      valor = rs.getInt(1);
                  }
-                 if (valor == 0) sigue = false;
+                 if (valor == 0) 
+                     sigue = false;
                  conn.close();
             } catch (Exception e) {
                 System.out.println("Ocurrio un error : "+e.getMessage());

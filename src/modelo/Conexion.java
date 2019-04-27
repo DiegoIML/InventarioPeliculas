@@ -11,13 +11,18 @@ import java.util.logging.Logger;
 
 public class Conexion {
     
-    private Connection conn = null;
-    private String puerto = "5433";
-    private String usuario = "postgres";
-    private String contraseña = "diego";
-    private String urlBaseDatos =  "jdbc:postgresql://localhost:" + puerto + "/" + usuario;
+    protected Connection conn = null;
+    protected String puerto = "5433";
+    protected String usuario = "postgres";
+    protected String contraseña = "diego";
+    protected String urlBaseDatos =  "jdbc:postgresql://localhost:" + puerto + "/" + usuario;
     
-                 
+    public void setDatosBD ( String puerto , String usuario , String contraseña ) {
+       this.puerto = puerto;
+       this.usuario = usuario;
+       this.contraseña = contraseña;
+    }   
+    
     public Connection getConexion(){
             try {  
               Class.forName("org.postgresql.Driver");

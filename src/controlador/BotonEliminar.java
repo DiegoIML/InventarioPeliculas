@@ -5,10 +5,13 @@ import java.awt.event.ActionListener;
 import javax.swing.JOptionPane;
 import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
+import modelo.Conexion;
 
 public class BotonEliminar implements ActionListener {
    private JTable tabla;
-   public BotonEliminar( JTable tabla) {
+   private Conexion conexionBD;
+   public BotonEliminar(Conexion conexionBD , JTable tabla) {
+       this.conexionBD = conexionBD;
        this.tabla = tabla;
    }
 
@@ -17,7 +20,10 @@ public class BotonEliminar implements ActionListener {
         if (tabla.isVisible()) {
                  DefaultTableModel aux = (DefaultTableModel) tabla.getModel();   
                  String inventory_id = String.valueOf(aux.getValueAt(tabla.getSelectedRow(),0));
+                 
                  OperacionesBD operaciones = new OperacionesBD();
+                 operaciones.setDatosBD(conexionBD.getPuerto(), conexionBD.getUsuario(), conexionBD.getContraseña());
+                 
                  operaciones.eliminarBD(inventory_id);
         }
         else 

@@ -1,6 +1,7 @@
-package controlador;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
+
+package pruebas;
+import controlador.OperacionesBD;
+import controlador.OperacionesExcel;
 import java.util.ArrayList;
 import javax.swing.JOptionPane;
 import javax.swing.JTable;
@@ -8,22 +9,19 @@ import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableColumnModel;
 import modelo.Conexion;
 import modelo.PeliculaInventario;
+import static org.junit.Assert.fail;
+import org.junit.Test;
 
-public class BotonBuscar implements ActionListener {
-        //COMPLETA LOS VALORES DE LA TABLA.
-    private JTable tabla;
-    private Conexion conexionBD;
+public class PruebaDescargar {
+    //private OperacionesBD operaciones;
     
-    public BotonBuscar ( Conexion conexionBD , JTable tabla) {
-      this.tabla = tabla;
-      this.conexionBD = conexionBD;
+    
+    public PruebaDescargar() {
     }
-
-    @Override
-    public void actionPerformed(ActionEvent ae) {
+    
+    public void crearTabla( JTable tabla , Conexion conexionBD ) {
        String[] columnasPelicula = new String[8];
        DefaultTableModel modelo = new DefaultTableModel();
-     
        modelo.addColumn("ID_Inventario");
        modelo.addColumn("ID_Pelicula");
        modelo.addColumn("Titulo_Pelicula");
@@ -34,17 +32,14 @@ public class BotonBuscar implements ActionListener {
        modelo.addColumn("Ultima_Actualizacion_Inventario");
        tabla.setModel(modelo);
        TableColumnModel modeloColumna = tabla.getColumnModel();
-        modeloColumna.getColumn(0).setPreferredWidth(120);
-        modeloColumna.getColumn(1).setPreferredWidth(120);
-        modeloColumna.getColumn(2).setPreferredWidth(200);
-        modeloColumna.getColumn(3).setPreferredWidth(150);
-        modeloColumna.getColumn(4).setPreferredWidth(120);
-        modeloColumna.getColumn(5).setPreferredWidth(120);
-        modeloColumna.getColumn(6).setPreferredWidth(120);
-        modeloColumna.getColumn(7).setPreferredWidth(250);
-   
-        
-        
+       modeloColumna.getColumn(0).setPreferredWidth(120);
+       modeloColumna.getColumn(1).setPreferredWidth(120);
+       modeloColumna.getColumn(2).setPreferredWidth(200);
+       modeloColumna.getColumn(3).setPreferredWidth(150);
+       modeloColumna.getColumn(4).setPreferredWidth(120);
+       modeloColumna.getColumn(5).setPreferredWidth(120);
+       modeloColumna.getColumn(6).setPreferredWidth(120);
+       modeloColumna.getColumn(7).setPreferredWidth(250); 
        OperacionesBD operaciones = new OperacionesBD();
        operaciones.setDatosBD(conexionBD.getPuerto(), conexionBD.getUsuario(), conexionBD.getContraseña());
        
@@ -65,9 +60,20 @@ public class BotonBuscar implements ActionListener {
             modelo.addRow(columnasPelicula); 
            }
            tabla.setModel(modelo);
-           tabla.setVisible(true); 
+           //tabla.setVisible(true); 
        }
        else
         JOptionPane.showMessageDialog(null , "Ha ocurrido un error al ingresar a la BD");
     }
+    
+    
+   @Test
+   public void pruebaDescargar() {
+      Conexion conexion = new Conexion();
+      JTable tabla =  new JTable();
+      crearTabla(tabla , conexion);
+      OperacionesExcel usoExcel = new OperacionesExcel(tabla); 
+      if (!usoExcel.crear_Excel())
+          fail("Ha fallado la descarga del excel.");
+   }
 }
