@@ -2,18 +2,14 @@ package pruebas;
 
 import controlador.OperacionesBD;
 import java.util.ArrayList;
-import modelo.Conexion;
 import modelo.PeliculaInventario;
-import org.junit.Before;
 import org.junit.Test;
 import static org.junit.Assert.*;
 
 
 public class PruebaBuscar {
     private OperacionesBD operaciones;
-    //private Conexion conexion;
-            
-            
+      
     public PruebaBuscar() {
     }
 

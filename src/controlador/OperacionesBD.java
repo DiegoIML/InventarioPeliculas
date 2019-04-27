@@ -34,27 +34,14 @@ public class OperacionesBD extends Conexion{
                  "    )\n" +
                  "	Order by  title , inventory_id ASC; ";
            
-               
-                // Class.forName("org.postgresql.Driver");
-                // conn = DriverManager.getConnection(urlDatabase,  "postgres", "diego");
-                 //Statement st = conn.createStatement();
-          
-                //ps = conn.prepareStatement(leeBD);
+
                 ps = conn.prepareStatement(leeBD);
                 rs = ps.executeQuery();
                 while (rs.next()) {
-                     //int fila = rs.getRow() -  1;
+                    
                      PeliculaInventario peliculaNueva = new PeliculaInventario( rs.getString(1) , rs.getString(2) , rs.getString(3) , rs.getString(4) , rs.getString(5) , rs.getString(6) , rs.getString(7) , rs.getString(8)  );
                      listaPeliculas.add(peliculaNueva);
-                    // pelicula.get( fila ).setI_inventory_id(rs.getString(1));
-                    // pelicula.get( fila ).setI_film_id(rs.getString(2));
-                    // pelicula.get( fila ).setF_title(rs.getString(3));
-                    // pelicula.get( fila ).setF_rental_duration(rs.getString(4));
-                    // pelicula.get( fila ).setF_length(rs.getString(5));
-                    // pelicula.get( fila ).setF_release_year(rs.getString(6));
-                    // pelicula.get( fila ).setI_store_id(rs.getString(7));
-                   //  pelicula.get( fila ).setI_last_update(rs.getString(8));
-                    // modelo.addRow(pelicula);     
+   
                  }
                  conn.close();
                  return listaPeliculas;
@@ -279,6 +266,80 @@ public class OperacionesBD extends Conexion{
             }
         return sigue;
     }
+    ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     
+    public boolean haSidoAgregado ( int nuevo_id) {
+        boolean cierto = true;
+            PreparedStatement ps;
+            ResultSet rs;
+            Connection conn = getConexion();     
+            try {
+                String consultaBD = "SELECT i.film_id FROM inventory as i WHERE i.film_id = ?;";
+                ps = conn.prepareStatement(consultaBD);
+                ps.setInt( 1, nuevo_id);
+                rs = ps.executeQuery();
+                int valor = 0;
+                 if (rs.next()) {   
+                     valor = rs.getInt(1);
+                 }
+                 if (valor == 0) 
+                     cierto = false;
+                 conn.close();
+            } catch (Exception e) {
+                System.out.println("Ocurrio un error en el metodo haSidoAgregado(int): "+e.getMessage());          
+            }
+        return cierto;
+    }
+    
+    ////////////////////////////////////////////////////////////
+    public boolean haSidoEliminado ( int eliminado_id) {
+      boolean cierto = false;
+      PreparedStatement ps;
+      ResultSet rs;
+      Connection conn = getConexion();     
+            try {
+                String consultaBD = "SELECT i.film_id FROM inventory as i WHERE i.film_id = ?;";
+                ps = conn.prepareStatement(consultaBD);
+                ps.setInt( 1, eliminado_id);
+                rs = ps.executeQuery();
+                int valor = 0;
+                 if (rs.next()) {   
+                     valor = rs.getInt(1);
+                 }
+                 if (valor == 0) 
+                     cierto = true;
+                 conn.close();
+            } catch (Exception e) {
+                System.out.println("Ocurrio un error en el metodo haSidoEliminado(int): "+e.getMessage());          
+            }
+      return cierto;
+    }
+    ////////////////////////////////////////////////////////////
+    public boolean haSidoActualizado ( int anterior_inventory_id  , int anterior_film_id , int anterior_store_id ) 
+    {
+        boolean cierto = false;
+        PreparedStatement ps;
+        ResultSet rs;
+        Connection conn = getConexion();     
+            try {
+                String consultaBD = "SELECT i.inventory_id , i.film_id  , i.store.id FROM inventory as i WHERE i.inventory_id = ? and i.film_id = ? and i.store_id = ?;";
+                ps = conn.prepareStatement(consultaBD);
+                ps.setInt( 1, anterior_inventory_id);
+                ps.setInt( 2, anterior_film_id);
+                ps.setInt( 3, anterior_store_id);
+                rs = ps.executeQuery();
+                 int inventory_id = 0;                          
+                 if (rs.next()) {   
+                     inventory_id =rs.getInt(1);
+                     
+                 }
+                 if (inventory_id == 0) 
+                     cierto = true;
+                 conn.close();
+            } catch (Exception e) {
+                System.out.println("Ocurrio un error en el metodo haSidoActualizado(int,int,int): "+e.getMessage());          
+            }
+        return cierto;
+    }
     
 }

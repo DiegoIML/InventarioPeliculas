@@ -24,8 +24,8 @@ public class PruebaActualizar {
         int nuevoIdPelicula = 1; 
         int nuevoIdTienda = 1;
         if(operaciones.actualizarBD(Integer.toString(antiguoIdInventario), Integer.toString(antiguoIdPelicula) ,Integer.toString( antiguoIdTienda), Integer.toString(nuevoIdInventario), Integer.toString(nuevoIdPelicula), Integer.toString(nuevoIdTienda))) {
-           if (operaciones.sigueAun(antiguoIdInventario , antiguoIdPelicula , antiguoIdTienda)) 
-           fail("No se ha cambiado el valor antiguo");    
+           if (!operaciones.haSidoActualizado(antiguoIdInventario , antiguoIdPelicula , antiguoIdTienda)) 
+           fail("NO SE HA ACTUALIZADO CORRECTAMENTE EN LA BASE DE DATOS.");    
         }
         else fail("Ha ocurrido un error en el metodo actualizarBD.");
     }
