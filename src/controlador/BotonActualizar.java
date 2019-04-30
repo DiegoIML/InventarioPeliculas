@@ -11,6 +11,7 @@ import modelo.Conexion;
 
 
 public class BotonActualizar implements ActionListener {
+    
     private Conexion conexionBD;
     private JTable tabla;
     private JTextField casillaIdInventario;
@@ -25,65 +26,78 @@ public class BotonActualizar implements ActionListener {
         this.conexionBD = conexionBD;        
     }
     
+    // ESTADO : funciona Bien.
+    // ACCION : comprobar si el dato en a casilla ID_INVENTARIO es Correcto.
+    
     public boolean comprobarCasillaIdInventario() {
        boolean correcto = false;
               String valor = casillaIdInventario.getText();
               if (!valor.isEmpty()) {
-                 if (valor.equals("0")) {  
-                  String regexp = "^\\d+$";
-                  if(Pattern.matches(regexp , valor)) {
-                   correcto = true;  
-                   }
+                 if(valor.equals("0")) {
+                     JOptionPane.showMessageDialog(null ,"El valor de ID_Inventario debe ser un número entero positivo mayor que cero.");
                  }
-                 else 
-                    JOptionPane.showMessageDialog(null ,"El valor debe ser un número entero positivo mayor que cero.");
-              } else  {
-                   JOptionPane.showMessageDialog(null ,"El valor debe ser un número entero positivo mayor que cero.");
+                 else {
+                      String regexp = "^\\d+$";
+                      if(Pattern.matches(regexp , valor)) {
+                      correcto = true;  
+                      }
+                 }    
+              }
+              else  {
+                   JOptionPane.showMessageDialog(null ,"Debe ingresar un valor para el campo ID_Inventario.");
               }
        return  correcto;
     }
+    
+    // ESTADO : funciona Bien.
+    // ACCION : comprobar si el dato en a casilla ID_PELICULA es Correcto.
     
     public boolean comprobarCasillaIdPelicula() {
        boolean correcto = false;
              String valor = casillaIdPelicula.getText();
              if (!valor.isEmpty()) {        
-                 if (valor.equals("0")) {
-                     
-                  String regexp = "^\\d+$";
-                  if(Pattern.matches(regexp , valor)) {
-                   correcto = true;  
-                   }
+                if(valor.equals("0")) {
+                    JOptionPane.showMessageDialog(null ,"El valor del ID_Pelicula debe ser un número entero positivo mayor que cero.");
                  }
-                else 
-                    JOptionPane.showMessageDialog(null ,"El valor debe ser un número entero positivo mayor que cero.");
+                 else {
+                      String regexp = "^\\d+$";
+                      if(Pattern.matches(regexp , valor)) {
+                      correcto = true;  
+                      }
+                 }    
+       
              }
              else {
-                 JOptionPane.showMessageDialog(null ,"El valor debe ser un número entero positivo mayor que cero.");
+                 JOptionPane.showMessageDialog(null ,"Debe ingresar un valor para el campo ID_Pelicula.");
              }
        return correcto;      
     }
 
+    // ESTADO : funciona Bien.
+    // ACCION : comprobar si el dato en a casilla ID_TIENDA es Correcto.
+    
     public boolean comprobarCasillaIdTienda() {
        boolean correcto = false;
              String valor = casillaIdTienda.getText();
              if (!valor.isEmpty()) {
-                if (valor.equals("0")) {
-                     
-                  String regexp = "^\\d+$";
-                  if(Pattern.matches(regexp , valor)) {
-                   correcto = true;  
-                   }
-                }
-                else 
-                    JOptionPane.showMessageDialog(null ,"El valor debe ser un número entero positivo mayor que cero.");
+                    if(valor.equals("0")) {
+                     JOptionPane.showMessageDialog(null ,"El valor del ID_Tienda debe ser un número entero positivo mayor que cero.");
+                 }
+                 else {
+                      String regexp = "^\\d+$";
+                      if(Pattern.matches(regexp , valor)) {
+                      correcto = true;  
+                      }
+                 }            
+                   
              }
              else {
-                   JOptionPane.showMessageDialog(null ,"El valor debe ser un número entero positivo mayor que cero.");
+                   JOptionPane.showMessageDialog(null ,"Debe ingresar un valor para el campo ID_Tienda.");
              }
        return correcto;     
     }
     
-    
+    //ACCION : cambiar los datos del inventario seleccionado.
     @Override
     public void actionPerformed(ActionEvent ae) {
          if (tabla.isVisible()) {
@@ -97,10 +111,9 @@ public class BotonActualizar implements ActionListener {
                 String nuevoIdTienda       =  casillaIdTienda.getText();
                 
                 OperacionesBD operaciones = new OperacionesBD();
-                operaciones.setDatosBD(conexionBD.getPuerto(), conexionBD.getUsuario(), conexionBD.getContraseña());
-                
+                operaciones.setDatosBD(conexionBD.getPuerto(), conexionBD.getUsuario(), conexionBD.getContraseña());            
                 operaciones.actualizarBD(antiguoIdInventario, antiguoIdPelicula, antiguoIdTienda, nuevoIdInventario, nuevoIdPelicula, nuevoIdTienda);
-            
+                
               } else  {
                 JOptionPane.showMessageDialog(null ,"Ingrese bien los campos de texto.");
               }

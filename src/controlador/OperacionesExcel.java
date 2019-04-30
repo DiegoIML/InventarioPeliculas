@@ -25,7 +25,7 @@ public class OperacionesExcel {
        this.tabla = tabla;
   
     }
-    
+    //Accion : crea un archivo excel.
      public boolean crear_Excel( File fichero) {
         boolean exito = false;
         if (tabla.isVisible()) {
@@ -65,14 +65,13 @@ public class OperacionesExcel {
         return exito;
     }
      ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-     
+     //Accion : lee el fichero excel.
       public boolean leer_Excel ( File fichero) {
         boolean exito = false ;
         try {
              File archivo = fichero;
              Workbook libro = Workbook.getWorkbook(archivo);
-             Sheet planilla = libro.getSheet(0);
-             //Iterator iteradorFilas = planilla.rowIterator();   
+             Sheet planilla = libro.getSheet(0);  
              int filas = planilla.getRows();
              int columnas  = planilla.getColumns();
              
@@ -98,14 +97,12 @@ public class OperacionesExcel {
                     modeloColumna.getColumn(6).setPreferredWidth(120);
                     modeloColumna.getColumn(7).setPreferredWidth(250);
              }
-             //tabla.setModel(modelo);
              String[] columnasInventario = new String[8]; 
              for (int i = 1 ; i < filas ; i++) {
                  
                  for (int j = 0 ; j < columnas ; j++)  {
                      Cell celda = planilla.getCell(j,i);
                      columnasInventario[j] = celda.getContents();
-                    // modelo.setValueAt( celda ,i , j);
                  }
                  modelo.addRow(columnasInventario);
              }

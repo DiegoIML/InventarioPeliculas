@@ -19,24 +19,17 @@ public class ObtenerDatosInventario extends MouseAdapter{
         this.casillaIdPelicula = casillaIdPelicula;
         this.casillaIdTienda = casillaIdTienda; 
     }
-
+    //ingresa los datos del inventario a las casillas de texto.
     @Override
-    public void mouseClicked(MouseEvent me) {
+    public void mousePressed(MouseEvent me) {
          if (tabla.isVisible()) {
-              //DefaultTableModel aux = (DefaultTableModel) tabla.getModel();
               String seleccionIdInventario =  String.valueOf(tabla.getValueAt(tabla.getSelectedRow(),0)); 
               String seleccionIdPelicula   =  String.valueOf(tabla.getValueAt(tabla.getSelectedRow(),1));
               String seleccionIdTienda     =  String.valueOf(tabla.getValueAt(tabla.getSelectedRow(),6)); 
               casillaIdInventario.setText(seleccionIdInventario);
               casillaIdPelicula.setText(seleccionIdPelicula);
               casillaIdTienda.setText(seleccionIdTienda);
-              System.out.println(" " + casillaIdInventario + " " + casillaIdPelicula + " " + casillaIdTienda );
         }
-        else {
-        System.out.println("La tabla es invisible");
-        }
-        
-       // throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
    

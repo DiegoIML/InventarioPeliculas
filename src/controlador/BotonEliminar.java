@@ -14,7 +14,7 @@ public class BotonEliminar implements ActionListener {
        this.conexionBD = conexionBD;
        this.tabla = tabla;
    }
-
+   //Accion : elimina la copia seleccionada del inventario.
     @Override
     public void actionPerformed(ActionEvent ae) {
         if (tabla.isVisible()) {

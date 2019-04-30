@@ -17,7 +17,7 @@ public class BotonConectar implements ActionListener {
      this.vista = vista;
      this.conexionBD = conexionBD;
    }
-    
+    //aparecerá la interfaz para cambiar los datos de conexión.
     @Override
     public void actionPerformed(ActionEvent ae) {
         VistaConexion dialogo = new VistaConexion(this.vista,true,conexionBD);

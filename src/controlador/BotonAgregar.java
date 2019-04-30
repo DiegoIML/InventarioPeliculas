@@ -10,12 +10,13 @@ import modelo.Conexion;
 public class BotonAgregar implements ActionListener {
     private final JTable tabla; 
     private Conexion conexionBD;
+    
     public BotonAgregar(Conexion conexionBD , JTable tabla) {
         this.tabla =tabla;
         this.conexionBD = conexionBD;
     }
     
-
+    // ACCION : agrega un elemento al inventario de la misma pelicula.
     @Override
     public void actionPerformed(ActionEvent ae) {
     if (tabla.isVisible()) {      

@@ -15,13 +15,13 @@ public class PruebaAgregar {
     @Test
     public void pruebaAgregar() {
         operaciones = new OperacionesBD();
-        int id_inventario = 5000;
+        int id_inventario = 1;
         int id_pelicula = 1;
         int id_tienda = 1;
 
         if ( operaciones.agregarBD(Integer.toString(id_inventario), Integer.toString(id_pelicula) , Integer.toString(id_tienda) )) {
-           if ( !operaciones.haSidoAgregado(id_inventario)) {
-               fail("NO SE HA AGREGADO CORRECTAMENTE EN LA BASE DE DATOS , COMPRUEBA QUE EL ID NO ESTE EN EL INVENTARIO.");
+          if ( operaciones.haSidoAgregado(id_pelicula,id_tienda) == false) {
+              fail("NO SE HA AGREGADO CORRECTAMENTE EN LA BASE DE DATOS , COMPRUEBA QUE EL ID NO ESTE EN EL INVENTARIO.");
            }
         }
         else fail ("Ha ocurrido un error en el metodo agregarBD. ");

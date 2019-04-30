@@ -10,7 +10,6 @@ import modelo.Conexion;
 import modelo.PeliculaInventario;
 
 public class BotonBuscar implements ActionListener {
-        //COMPLETA LOS VALORES DE LA TABLA.
     private JTable tabla;
     private Conexion conexionBD;
     
@@ -18,7 +17,8 @@ public class BotonBuscar implements ActionListener {
       this.tabla = tabla;
       this.conexionBD = conexionBD;
     }
-
+    
+    // ACCION : obtener las peliculas del inventario disponibles para la renta.
     @Override
     public void actionPerformed(ActionEvent ae) {
        String[] columnasPelicula = new String[8];
@@ -42,9 +42,7 @@ public class BotonBuscar implements ActionListener {
         modeloColumna.getColumn(5).setPreferredWidth(120);
         modeloColumna.getColumn(6).setPreferredWidth(120);
         modeloColumna.getColumn(7).setPreferredWidth(250);
-   
-        
-        
+    
        OperacionesBD operaciones = new OperacionesBD();
        operaciones.setDatosBD(conexionBD.getPuerto(), conexionBD.getUsuario(), conexionBD.getContraseña());
        
@@ -52,8 +50,6 @@ public class BotonBuscar implements ActionListener {
        if (listaPeliculas != null) 
        { 
            for (PeliculaInventario peliculaObtenida : listaPeliculas) {
-           //modelo.addRow(peliculaObtenida);
-           //modelo.addRow(listaPeliculas.toArray());
             columnasPelicula[0] = peliculaObtenida.getI_inventory_id();
             columnasPelicula[1] = peliculaObtenida.getI_film_id();
             columnasPelicula[2] = peliculaObtenida.getF_title();

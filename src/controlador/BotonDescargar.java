@@ -18,6 +18,7 @@ public class BotonDescargar implements ActionListener{
      this.ventana = ventana;
     }
     
+    // Accion : Guarda el inventario en un archivo .xls ya sea uno ya existente o en uno que será creado. 
     @Override
     public void actionPerformed(ActionEvent ae) {
       OperacionesExcel usoExcel = new OperacionesExcel(tabla);  
@@ -25,6 +26,7 @@ public class BotonDescargar implements ActionListener{
       FileNameExtensionFilter filtro = new FileNameExtensionFilter("Archivos Excel" , "xls", "xlsx");
       fc.setFileFilter(filtro);
       int seleccion = fc.showSaveDialog(ventana);
+      
       if(seleccion == JFileChooser.APPROVE_OPTION) {
          File fichero = fc.getSelectedFile();
          if (fichero.getName().endsWith("xls") || fichero.getName().endsWith("xlsx")) {
@@ -35,7 +37,8 @@ public class BotonDescargar implements ActionListener{
             usoExcel.crear_Excel(new File(direccion));
         }
  
-      }
+      } JOptionPane.showMessageDialog(null , "No ha introducido ningun nombre o seleccionado ningún archivo ");  
+      
       
     }
     
