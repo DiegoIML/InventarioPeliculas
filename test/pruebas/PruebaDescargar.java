@@ -2,6 +2,7 @@
 package pruebas;
 import controlador.OperacionesBD;
 import controlador.OperacionesExcel;
+import java.io.File;
 import java.util.ArrayList;
 import javax.swing.JOptionPane;
 import javax.swing.JTable;
@@ -73,7 +74,7 @@ public class PruebaDescargar {
       JTable tabla =  new JTable();
       crearTabla(tabla , conexion);
       OperacionesExcel usoExcel = new OperacionesExcel(tabla); 
-      if (!usoExcel.crear_Excel())
+      if (!usoExcel.crear_Excel(new File("ArchivoTest.xls")))
           fail("Ha fallado la descarga del excel.");
    }
 }

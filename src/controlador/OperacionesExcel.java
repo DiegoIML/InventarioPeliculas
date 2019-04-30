@@ -20,18 +20,20 @@ import jxl.write.WriteException;
 
 public class OperacionesExcel {
     private JTable tabla;
+
     public OperacionesExcel (JTable tabla) {
        this.tabla = tabla;
+  
     }
     
-     public boolean crear_Excel() {
+     public boolean crear_Excel( File fichero) {
         boolean exito = false;
         if (tabla.isVisible()) {
             
             WorkbookSettings configuracion = new WorkbookSettings();
             configuracion.setEncoding("ISO-8859-1");
             try {
-                WritableWorkbook libro = Workbook.createWorkbook(new File("InventarioTienda.xls") , configuracion);
+                WritableWorkbook libro = Workbook.createWorkbook( fichero, configuracion);
                 WritableSheet planilla = libro.createSheet("Inventario Peliculas" , 0);
                 DefaultTableModel modelo =(DefaultTableModel) tabla.getModel();
                 String [] etiquetasColumnas =  { "ID_Inventario" , "ID_Pelicula" , "Titulo_Pelicula" , "Dias_Renta_Pelicula" , "Duracion_Pelicula" , "Año_Estreno_Pelicula" , "ID_Tienda" , "Ultima_Actualizacion_Inventario"} ;
@@ -64,10 +66,10 @@ public class OperacionesExcel {
     }
      ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
      
-      public boolean leer_BD () {
+      public boolean leer_Excel ( File fichero) {
         boolean exito = false ;
         try {
-             File archivo = new File("InventarioTienda.xls");
+             File archivo = fichero;
              Workbook libro = Workbook.getWorkbook(archivo);
              Sheet planilla = libro.getSheet(0);
              //Iterator iteradorFilas = planilla.rowIterator();   

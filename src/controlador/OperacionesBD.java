@@ -148,124 +148,6 @@ public class OperacionesBD extends Conexion{
        return exito;
     }
       
-    //////////////////////////////////////////////////////////////////////////////////////
-    ///OPERACIONES AUXILIARES EN PARA EL CRUDTEST. 
-    //////////////////////////////////////////////////////////////////////////////////////
-    public int numeroFilasFilm ( int idPelicula ) {
-       int numFilas = 0;
-       PreparedStatement ps;
-       ResultSet rs;
-       Connection conn = getConexion(); 
-            try {
-                 String consultarBD = "Select count(*) from inventory where film_id = ? "  ;
-                 ps = conn.prepareStatement(consultarBD);
-                 //ps.setInt (1 , idInventario  );
-                 ps.setInt (1 , idPelicula );
-                // ps.setInt (3 , idTienda );
-                 rs = ps.executeQuery();
-                 if (rs.next()) {   
-                     numFilas = rs.getInt(1);
-                 }
-                 conn.close();
-                 return numFilas;
-            } catch (Exception e) {
-                System.out.println("Ocurrio un error : "+e.getMessage());
-               
-            }
-        return -1;
-    }
-    
-    public int numeroFilas ( int idInventario) {
-       int numFilas = 0;
-       PreparedStatement ps;
-       ResultSet rs;
-       Connection conn = getConexion();
-       try {
-                 String consultarBD = "Select count(*) from inventory where inventory_id  = ?;"  ;
-                 ps = conn.prepareStatement(consultarBD);
-                 ps.setInt (1 , idInventario  );
-                 rs = ps.executeQuery();
-                 if (rs.next()) {   
-                     numFilas = rs.getInt(1);
-                 }
-                 conn.close();
-                 return numFilas;
-            } catch (Exception e) {
-                System.out.println("Ocurrio un error : "+e.getMessage());
-               
-            }
-       return -1;
-    }
-    
-    public int numeroFilas () {
-      int numFilas = 0;
-      PreparedStatement ps;
-      ResultSet rs;
-      Connection conn = getConexion();
-      try {
-                
-                String consultarBD = 
-                 "    select count(*) from ( (Select tabla.inventory_id , tabla.film_id , tabla.title , MAX(tabla.rental_duration) , tabla.length , tabla.release_year , tabla.store_id , tabla.last_update\n" +
-                 "    From  (Select i.inventory_id , i.film_id , f.title , f.rental_duration , f.length , f.release_year , i.store_id , i.last_update  \n" +
-                 "          From inventory as i , film as f , rental as r\n" +
-                 "		  Where i.film_id = f.film_id and  r.inventory_id = i.inventory_id and r.rental_date is not null 	       \n" +
-                 "    Order by f.title , i.inventory_id ASC	) as tabla \n" +
-                 "    Where  inventory_id = tabla.inventory_id  and film_id = tabla.film_id\n" +
-                 "    Group by tabla.inventory_id  , tabla.film_id , tabla.title ,  tabla.length , tabla.release_year , tabla.store_id , tabla.last_update	  \n" +
-                 "	)\n" +
-                 "	union all\n" +
-                 "	(\n" +
-                 "	Select distinct i.inventory_id , i.film_id , f.title , f.rental_duration , f.length , f.release_year , i.store_id , i.last_update  \n" +
-                 "    From inventory as i , film as f \n" +
-                 "    Where i.film_id =  f.film_id and  i.inventory_id not in (Select r.inventory_id From rental r)\n" +
-                 "    )\n" +
-                 "	Order by  title , inventory_id ASC) as numfilas; ";
-           
-                 //String consultarBD = "Select count(*) from inventory where inventory_id  = ?;"  ;
-                 ps = conn.prepareStatement(consultarBD);
-                 //ps.setInt (1 , idInventario  );
-                 rs = ps.executeQuery();
-                 if (rs.next()) {   
-                     numFilas = rs.getInt(1);
-                 }
-                
-                 conn.close();
-                 return numFilas;
-            } catch (Exception e) {
-                System.out.println("Ocurrio un error : "+e.getMessage());
-               
-            }
-       return -1;
-    
-    }
-          
-    
-    
-    public boolean sigueAun (int idInventario, int idPelicula , int idTienda) {
-        boolean sigue = true;
-        PreparedStatement ps;
-        ResultSet rs;
-        Connection conn = getConexion();
-        try {
-                 String consultarBD = "Select Count(*) from inventory where inventory_id  = ? and film_id  = ? and store_id = ?;"  ;
-                 ps = conn.prepareStatement(consultarBD);
-                 ps.setInt (1 , idInventario  );
-                 ps.setInt (2 , idPelicula );
-                 ps.setInt (3 , idTienda );
-                 rs = ps.executeQuery();
-                 int valor = 0;
-                 if (rs.next()) {   
-                     valor = rs.getInt(1);
-                 }
-                 if (valor == 0) 
-                     sigue = false;
-                 conn.close();
-            } catch (Exception e) {
-                System.out.println("Ocurrio un error : "+e.getMessage());
-               
-            }
-        return sigue;
-    }
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     
     public boolean haSidoAgregado ( int nuevo_id) {
@@ -341,5 +223,7 @@ public class OperacionesBD extends Conexion{
             }
         return cierto;
     }
+    ///////////////////////////////////////////////////////////////////////////////////////////////////////////
+    
     
 }

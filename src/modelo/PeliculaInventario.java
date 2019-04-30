@@ -1,9 +1,8 @@
 package modelo;
 
-import java.util.Date;
 
 public class PeliculaInventario {
-    //Inventory i , Film f
+
      String i_inventory_id ; 
      String i_film_id;
      String f_title;

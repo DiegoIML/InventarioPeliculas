@@ -1,10 +1,7 @@
-
 package modelo;
-
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
-import java.sql.Statement;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -22,6 +19,8 @@ public class Conexion {
        this.usuario = usuario;
        this.contraseña = contraseña;
     }   
+    
+    //regresa la conexion con la Base de datos segun los datos entregados.
     
     public Connection getConexion(){
             try {  

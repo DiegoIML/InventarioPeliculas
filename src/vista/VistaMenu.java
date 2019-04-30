@@ -30,11 +30,11 @@ public class VistaMenu extends javax.swing.JFrame {
         botonEliminar.addActionListener(new BotonEliminar(conexionBD , tablaInventario));
         botonActualizar.addActionListener(new BotonActualizar(conexionBD ,tablaInventario , cuadroIdInventario , cuadroIdPelicula , cuadroIdTienda));
         tablaInventario.addMouseListener(new ObtenerDatosInventario(tablaInventario , cuadroIdInventario , cuadroIdPelicula , cuadroIdTienda));
-        botonDescargar.addActionListener(new BotonDescargar(tablaInventario));
-        botonIngresar.addActionListener(new BotonIngresar(tablaInventario));
+        botonDescargar.addActionListener(new BotonDescargar(tablaInventario ,this));
+        botonIngresar.addActionListener(new BotonIngresar(tablaInventario , this));
         botonConectar.addActionListener(new BotonConectar( this , conexionBD));
-       // setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        System.out.println("holo");
+        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+      
     }
 
     @SuppressWarnings("unchecked")
@@ -278,13 +278,13 @@ public class VistaMenu extends javax.swing.JFrame {
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jTabbedPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+            .addGroup(layout.createSequentialGroup()
+                .addComponent(jTabbedPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 1035, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(0, 0, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addComponent(jTabbedPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 616, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 0, Short.MAX_VALUE))
+            .addComponent(jTabbedPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 616, javax.swing.GroupLayout.PREFERRED_SIZE)
         );
 
         pack();

@@ -29,10 +29,14 @@ public class BotonActualizar implements ActionListener {
        boolean correcto = false;
               String valor = casillaIdInventario.getText();
               if (!valor.isEmpty()) {
+                 if (valor.equals("0")) {  
                   String regexp = "^\\d+$";
-                  if (Pattern.matches(regexp , valor)) {
-                     correcto = true;  
-                  }
+                  if(Pattern.matches(regexp , valor)) {
+                   correcto = true;  
+                   }
+                 }
+                 else 
+                    JOptionPane.showMessageDialog(null ,"El valor debe ser un número entero positivo mayor que cero.");
               } else  {
                    JOptionPane.showMessageDialog(null ,"El valor debe ser un número entero positivo mayor que cero.");
               }
@@ -42,11 +46,16 @@ public class BotonActualizar implements ActionListener {
     public boolean comprobarCasillaIdPelicula() {
        boolean correcto = false;
              String valor = casillaIdPelicula.getText();
-             if (!valor.isEmpty()) {
-                String regexp = "^\\d+$";
-                if(Pattern.matches(regexp , valor)) {
-                  correcto = true;  
-                }
+             if (!valor.isEmpty()) {        
+                 if (valor.equals("0")) {
+                     
+                  String regexp = "^\\d+$";
+                  if(Pattern.matches(regexp , valor)) {
+                   correcto = true;  
+                   }
+                 }
+                else 
+                    JOptionPane.showMessageDialog(null ,"El valor debe ser un número entero positivo mayor que cero.");
              }
              else {
                  JOptionPane.showMessageDialog(null ,"El valor debe ser un número entero positivo mayor que cero.");
@@ -58,10 +67,15 @@ public class BotonActualizar implements ActionListener {
        boolean correcto = false;
              String valor = casillaIdTienda.getText();
              if (!valor.isEmpty()) {
-                String regexp = "^\\d+$";
-                if(Pattern.matches(regexp , valor)) {
-                  correcto = true;  
+                if (valor.equals("0")) {
+                     
+                  String regexp = "^\\d+$";
+                  if(Pattern.matches(regexp , valor)) {
+                   correcto = true;  
+                   }
                 }
+                else 
+                    JOptionPane.showMessageDialog(null ,"El valor debe ser un número entero positivo mayor que cero.");
              }
              else {
                    JOptionPane.showMessageDialog(null ,"El valor debe ser un número entero positivo mayor que cero.");
